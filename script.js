@@ -79,8 +79,18 @@ function save() {
     state.prompts.unshift(newPrompt)
     state.selectedId = newPrompt.id
 
-    console.log(state.prompts);
+    persist()
+    alert("Prompt salvo com sucesso!")
     
+  }
+}
+
+function persist() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.prompts))
+  } catch (e) {
+    console.error("Erro ao salvar no localStorage", e)
+    alert("Erro ao salvar o prompt.")
   }
 }
 
