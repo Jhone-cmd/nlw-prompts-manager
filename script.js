@@ -94,6 +94,17 @@ function persist() {
   }
 }
 
+
+function load() {
+  try {
+    const storage = localStorage.getItem(STORAGE_KEY)     
+    state.prompts = storage ? JSON.parse(storage) : []
+    state.selectedId = null
+  } catch (error) {
+    console.error("Erro ao carregar do localStorage", error)
+  }
+}
+
 // Eventos
 elements.btnSave.addEventListener("click", save)
 
