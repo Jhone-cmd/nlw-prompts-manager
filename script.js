@@ -105,6 +105,22 @@ function load() {
   }
 }
 
+function createPromptItem(prompt) {
+  const tmp = document.createElement("div")
+  tmp.innerHTML = prompt.content
+  return `
+      <li class="prompt-item" data-id="${prompt.id}" data-action="select">
+        <div class="prompt-item-content">
+          <span class="prompt-item-title">${prompt.title}</span>
+          <span class="prompt-item-description">${tmp.textContent}</span>
+        </div>
+
+      <button class="btn-icon" title="Remover" data-action="remove">
+        <img src="assets/remove.svg" alt="Remover" class="icon icon-trash" />
+      </button>
+    </li>
+  `
+}
 
 function renderList(filterText = "") {
   const filteredPrompts = state.prompts
