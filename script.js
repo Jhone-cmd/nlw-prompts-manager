@@ -18,6 +18,9 @@ const elements = {
   sidebar: document.querySelector(".sidebar"),
   btnSave: document.getElementById("btn-save"),
   list: document.getElementById("prompt-list"),
+  search: document.getElementById("search-input"),
+  btnNew: document.getElementById("btn-new"),
+  btnCopy: document.getElementById("btn-copy"),
 }
 
 // Atualiza o estado do wrapper conforme o conteúdo do elemento
