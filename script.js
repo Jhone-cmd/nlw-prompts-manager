@@ -150,9 +150,14 @@ function newPrompt() {
   elements.promptTitle.focus()
 }
 
+function searchPrompts(event) {
+  renderList(event.target.value)
+}
+
 // Eventos
 elements.btnSave.addEventListener("click", save)
 elements.btnNew.addEventListener("click", newPrompt)
+elements.search.addEventListener("input", searchPrompts)
 
 // Inicialização
 function init() {
