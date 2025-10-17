@@ -133,12 +133,22 @@ function renderList(filterText = "") {
   elements.list.innerHTML = filteredPrompts
 }
 
+function newPrompt() {
+  state.selectedId = null
+  elements.promptTitle.textContent = ""
+  elements.promptContent.textContent = ""
+  updateAllEditableStates()
+  elements.promptTitle.focus()
+}
+
 // Eventos
 elements.btnSave.addEventListener("click", save)
-
+elements.btnNew.addEventListener("click", newPrompt)
 
 // Inicialização
 function init() {
+  load()
+  renderList("")
   attachAllEditableHandlers()
   updateAllEditableStates()
   
