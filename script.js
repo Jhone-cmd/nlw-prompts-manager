@@ -105,6 +105,18 @@ function load() {
   }
 }
 
+
+function renderList(filterText = "") {
+  const filteredPrompts = state.prompts
+    .filter((prompt) =>
+      prompt.title.toLowerCase().includes(filterText.toLowerCase().trim())
+    )
+    .map((p) => createPromptItem(p))
+    .join("")
+
+  elements.list.innerHTML = filteredPrompts
+}
+
 // Eventos
 elements.btnSave.addEventListener("click", save)
 
