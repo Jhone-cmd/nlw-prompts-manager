@@ -70,8 +70,13 @@ function save() {
   }
 
   if (state.selectedId) {
-    // Editando um prompt existente
-  
+      // Editando um prompt existente
+    const existingPrompt = state.prompts.find((p) => p.id === state.selectedId)
+
+    if (existingPrompt) {
+      existingPrompt.title = title || "Sem título"
+      existingPrompt.content = content || "Sem conteúdo"
+    }  
   } else {
     // Criando um novo prompt
     const newPrompt = {
