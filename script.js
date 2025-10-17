@@ -35,7 +35,6 @@ function updateAllEditableStates() {
   updateEditableWrapperState(elements.promptContent, elements.contentWrapper)
 }
 
-
 // Adiciona ouvintes de input para atualizar wrappers em tempo real
 function attachAllEditableHandlers() {
   elements.promptTitle.addEventListener("input", function () {
@@ -46,7 +45,6 @@ function attachAllEditableHandlers() {
     updateEditableWrapperState(elements.promptContent, elements.contentWrapper)
   })
 }
-
 
 // Funções para abrir e fechar a sidebar
 function openSidebar() {
@@ -87,11 +85,11 @@ function save() {
 
     state.prompts.unshift(newPrompt)
     state.selectedId = newPrompt.id
-
-    renderList("")
-    persist()
-    alert("Prompt salvo com sucesso!")
   }
+
+  renderList(elements.search.value)
+  persist()
+  alert("Prompt salvo com sucesso!")
 }
 
 function persist() {
@@ -154,10 +152,57 @@ function searchPrompts(event) {
   renderList(event.target.value)
 }
 
+function handleListClick(event) {
+  const removeBtn = event.target.closest("[data-action='remove']")
+  const item = event.target.closest("[data-id]")
+
+  if (!item) return
+
+  const id = item.getAttribute("data-id")
+  state.selectedId = id
+
+  if (removeBtn) {
+    // Remover prompt.
+    state.prompts = state.prompts.filter((p) => p.id !== id)
+    renderList(elements.search.value)
+    persist()
+    return
+  }
+
+  if (event.target.closest("[data-action='select']")) {
+    const prompt = state.prompts.find((p) => p.id === id)
+
+    if (prompt) {
+      elements.promptTitle.textContent = prompt.title
+      elements.promptContent.innerHTML = prompt.content
+      updateAllEditableStates()
+    }
+  }
+}
+
+function copySelected() {
+  try {
+    const content = elements.promptContent
+
+    if (!navigator.clipboard) {
+      console.error("Clipboard API não suportada neste ambiente.")
+      return
+    }
+
+    navigator.clipboard.writeText(content.innerText)
+
+    alert("Conteúdo copiado para a área de transferência!")
+  } catch (error) {
+    console.log("Erro ao copiar para a área de transferência:", error)
+  }
+}
+
 // Eventos
 elements.btnSave.addEventListener("click", save)
 elements.btnNew.addEventListener("click", newPrompt)
 elements.search.addEventListener("input", searchPrompts)
+elements.list.addEventListener("click", handleListClick)
+elements.btnCopy.addEventListener("click", copySelected)
 
 // Inicialização
 function init() {
